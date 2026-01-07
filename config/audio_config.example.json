@@ -1,9 +1,0 @@
-{
-  "_comment": "Example audio configuration file",
-  "sample_rate": 48000,
-  "channels": 1,
-  "chunk_size": 2048,
-  "pause_threshold": 0.8,
-  "energy_threshold": 400,
-  "dynamic_energy_threshold": true
-}
