@@ -1,0 +1,31 @@
+# Voice Assistant Requirements - Final Working Versions
+# Core AI/ML packages
+opencv-python==4.11.0.86
+Pillow==12.1.0
+ultralytics==8.3.249
+
+# Speech and voice packages
+pyttsx3==2.99
+SpeechRecognition==3.14.5
+
+# Information and utility packages
+wikipedia==1.4.0
+pywhatkit==5.4
+pyjokes==0.8.3
+requests==2.32.5
+feedparser==6.0.12
+
+# Data processing
+numpy==2.2.6
+
+# GUI packages are built-in with Python:
+# tkinter, threading, datetime, os, subprocess, time, json, re, math, webbrowser
+
+# Additional dependencies (automatically installed with above packages):
+# matplotlib==3.10.8
+# scipy==1.16.3
+# torch==2.9.1
+# torchvision==0.24.1
+# beautifulsoup4==4.14.3
+# Flask==3.1.2
+# pyautogui==0.9.54

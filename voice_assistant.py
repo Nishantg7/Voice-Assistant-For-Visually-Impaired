@@ -1,15 +1,18 @@
 import tkinter as tk
 import pyttsx3
 import threading
-import speech_recognition as sr 
+import speech_recognition as sr
 import datetime
-import wikipedia 
+import wikipedia
 import webbrowser
 import os
 import pywhatkit
 import pyjokes
 import subprocess
 import time
+from weather import get_weather_info
+from calculator import calculate_expression
+from reminder import save_note, get_notes, clear_all_notes, find_notes
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -126,8 +129,70 @@ def voice_assistant_logic():
         elif 'scan money' in query:
             camera_thread = threading.Thread(target=scan_money)
             camera_thread.start()
-           
-            
+
+        elif 'weather' in query or 'weather in' in query:
+            if 'weather in' in query:
+                city = query.replace('weather in', '').strip()
+            else:
+                city = query.replace('weather', '').strip()
+            if city:
+                weather_info = get_weather_info(city)
+                speak(weather_info)
+            else:
+                speak("Please specify a city name for weather information.")
+
+        elif 'calculate' in query or 'math' in query or any(op in query for op in ['plus', 'minus', 'times', 'divide', 'add', 'subtract', 'multiply']):
+            # Extract the math expression from the query
+            if 'calculate' in query:
+                expression = query.replace('calculate', '').strip()
+            elif 'math' in query:
+                expression = query.replace('math', '').strip()
+            else:
+                expression = query
+
+            if expression:
+                result = calculate_expression(expression)
+                speak(result)
+            else:
+                speak("Please provide a math expression to calculate.")
+
+        elif 'note' in query or 'remind me' in query or 'remember' in query:
+            if 'note' in query:
+                content = query.replace('note', '').strip()
+            elif 'remind me' in query:
+                content = query.replace('remind me', '').strip()
+            elif 'remember' in query:
+                content = query.replace('remember', '').strip()
+            else:
+                content = query
+
+            if content:
+                result = save_note(content)
+                speak(result)
+            else:
+                speak("What would you like me to note down?")
+
+        elif 'show notes' in query or 'read notes' in query or 'my notes' in query:
+            notes = get_notes()
+            speak(notes)
+
+        elif 'clear notes' in query or 'delete all notes' in query:
+            result = clear_all_notes()
+            speak(result)
+
+        elif 'find note' in query or 'search notes' in query:
+            if 'find note' in query:
+                keyword = query.replace('find note', '').strip()
+            elif 'search notes' in query:
+                keyword = query.replace('search notes', '').strip()
+
+            if keyword:
+                result = find_notes(keyword)
+                speak(result)
+            else:
+                speak("What keyword would you like to search for?")
+
+
 def open_camera():
     subprocess.Popen(['python', 'object_detection.py'])
     time.sleep(5)  # Wait for 5 seconds for camera window to open
